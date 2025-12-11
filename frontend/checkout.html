@@ -5,6 +5,7 @@
     <link rel="stylesheet" href="styles.css">
     <title>Checkout - Product Store</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="styles.css">
     <script src="https://unpkg.com/htmx.org@1.9.10"></script>
 </head>
 <body>
@@ -15,10 +16,9 @@
     </header>
 
     <main>
-        <section id="checkout-page" style="max-width: 800px; margin: 0 auto;">
+        <section id="checkout-page" style="max-width: 800px; margin: 0 auto; padding: 1.5rem;">
             <h2>Order summary</h2>
 
-            <!-- Re-use the /cart endpoint to show current cart as summary -->
             <div id="order-summary"
                  hx-get="/cart"
                  hx-trigger="load"
@@ -31,12 +31,11 @@
 
             <h2>Your details</h2>
 
-            <!-- Simple checkout form posting to /checkout -->
             <form id="checkout-form"
-                hx-post="/checkout"
-                hx-target="#checkout-page"
-                hx-swap="innerHTML"
-                style="display: flex; flex-direction: column; gap: 8px; max-width: 400px;">
+                  hx-post="/checkout"
+                  hx-target="#checkout-result"
+                  hx-swap="innerHTML"
+                  style="display: flex; flex-direction: column; gap: 8px; max-width: 400px;">
 
                 <label>
                     Full name<br>
