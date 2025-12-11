@@ -48,6 +48,7 @@ func (dbc *DBContext) HandleGetProducts(c *gin.Context) {
 		return
 	}
 
+	c.HTML(200, "productsTemplate.html", products)
 }
 
 func (dbc *DBContext) HandleGetProduct(c *gin.Context) {
@@ -64,4 +65,5 @@ func (dbc *DBContext) HandleGetProduct(c *gin.Context) {
 		return
 	}
 
+	c.HTML(200, "productTemplate.html", product)
 }
