@@ -40,7 +40,33 @@
             <hr>
 
             <div id="product-view-area">
-                <h3>Select a category to start browsing!</h3>
+
+                <div id="pagination-controls" hx-swap-oob="true">
+                    <p>Showing X-Y of Z results</p>
+                    <button hx-get="/products/?product_type=smartphones&offset=0&pageSize=10" hx-target="#product-view-area" hx-swap="outerHTML">Previous</button>
+                    <button hx-get="/products/?product_type=smartphones&offset=20&pageSize=10" hx-target="#product-view-area" hx-swap="outerHTML">Next</button>
+                </div>
+
+                <ul id="product-list" class="product-grid">
+                    <li>
+                        <div class="product-box">
+                            <h3>Smartphone X</h3>
+                            <p> 999.00</p>
+                            <p> USD</p>
+                            <p> 50</p>
+                            <p> smartphones</p>
+                        </div>
+
+                        <input type="hidden" name="product_id" value="smart_x">
+                        <button
+                            hx-post="/api/cart/add"
+                            hx-include="[name='product_id']"
+                            hx-target="#cart-view"
+                            hx-swap="innerHTML">
+                            Add to Cart
+                        </button>
+                    </li>
+                </ul>
             </div>
 
         </section>
