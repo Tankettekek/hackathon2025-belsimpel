@@ -10,7 +10,9 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/go.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/xml.min.js"></script> <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/sql.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/xml.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/sql.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/nginx.min.js"></script>
 
     <style>
         /* Presentation specific styles */
@@ -141,35 +143,36 @@
 
         <div class="slide">
             <div class="slide-content">
-                <h2>The Tech Stack</h2>
+                <h2>Infrastructure & Routing</h2>
                 <div class="grid-2">
                     <div>
-                        <h3>Backend: Go (Golang)</h3>
-                        <p>High-performance backend handling routing, database logic, and HTML rendering.</p>
+                        <h3>Docker Services</h3>
+                        <p>We use Nginx as a Reverse Proxy to route traffic between the user and our Go backend.</p>
                         <ul style="margin-top: 1rem;">
-                            <li><strong>Gin:</strong> Web framework</li>
-                            <li><strong>GORM:</strong> ORM for PostgreSQL</li>
+                            <li><strong>Frontend (Port 80):</strong> Nginx serves static HTML.</li>
+                            <li><strong>Backend (Port 8000):</strong> Go API handles logic.</li>
+                            <li><strong>Proxy:</strong> <code>/products</code> requests are forwarded to Go.</li>
                         </ul>
                     </div>
                     <div>
-                        <h3>Frontend: HTMX</h3>
-                        <p>Allows us to access AJAX, CSS Transitions, WebSockets and Server Sent Events directly in HTML.</p>
-                        <ul style="margin-top: 1rem;">
-                            <li>No complex JS bundles</li>
-                            <li>Server-Driven UI (HTML over the wire)</li>
-                        </ul>
-                    </div>
-                </div>
-                <div style="margin-top: 2rem;">
-                    <h3>Infrastructure</h3>
-                    <p>Fully containerized with <strong>Docker</strong> for easy deployment.</p>
-                    <div class="code-block">
-                        <pre><code class="language-dockerfile"># Backend Dockerfile
-FROM golang:latest
-WORKDIR /app
-COPY . .
-RUN go build -o main .
-CMD ["./main"]</code></pre>
+                        <h3>Nginx Config (nginx.conf)</h3>
+                        <div class="code-block">
+<pre><code class="language-nginx">upstream backend_app {
+    server backend:8000;
+}
+
+server {
+    listen 80;
+
+    # Static Files
+    location / { root /usr/share/nginx/html; }
+
+    # API Proxy
+    location /products {
+        proxy_pass http://backend_app;
+    }
+}</code></pre>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -178,32 +181,32 @@ CMD ["./main"]</code></pre>
         <div class="slide">
             <div class="slide-content">
                 <h2>Flow 1: Browsing Products</h2>
-                <p>Instead of fetching JSON, the frontend requests HTML. The magic happens in the <code>hx-get</code> attribute.</p>
+                <p>We use HTMX to fetch HTML fragments based on <strong>Query Parameters</strong>.</p>
 
                 <div class="grid-2">
                     <div>
                         <h3>Frontend (index.html)</h3>
-                        <p>When clicked, HTMX fetches data and swaps the <code>outerHTML</code> of the target container.</p>
+                        <p>Clicking a button sends a GET request with filters (e.g., `filter=smartphone`).</p>
                         <div class="code-block">
-<pre><code class="language-xml">&lt;button
-    hx-get="/products?product_type=smartphones..."
+<pre><code class="language-xml">&lt;!-- Fetch smartphones, offset 0, limit 10 --&gt;
+&lt;button
+    hx-get="/products?filter=smartphone&offset=0&page-size=10"
     hx-target="#product-view-area"
     hx-swap="outerHTML"&gt;
     View Smartphones
 &lt;/button&gt;
 
 &lt;div id="product-view-area"&gt;
-    &lt;!-- Content is swapped here --&gt;
+    &lt;!-- Results appear here --&gt;
 &lt;/div&gt;</code></pre>
                         </div>
                     </div>
                     <div>
-                        <h3>What happens?</h3>
+                        <h3>Why this works</h3>
                         <ol>
-                            <li>User clicks button.</li>
-                            <li>Browser sends GET to <code>/products</code>.</li>
-                            <li>Server returns a list of products as HTML.</li>
-                            <li>HTMX replaces the button's target area with that HTML.</li>
+                            <li><strong>State:</strong> The URL holds the state (`?filter=smartphone`).</li>
+                            <li><strong>Target:</strong> HTMX swaps only the content inside <code>#product-view-area</code>.</li>
+                            <li><strong>Speed:</strong> No full page reload needed.</li>
                         </ol>
                     </div>
                 </div>
@@ -213,48 +216,46 @@ CMD ["./main"]</code></pre>
         <div class="slide">
             <div class="slide-content">
                 <h2>Flow 1: The Backend Handler</h2>
-                <p>The Go backend handles the request and renders a template instead of JSON.</p>
+                <p>The Go backend parses the query parameters and renders a template.</p>
 
                 <div class="code-block">
 <pre><code class="language-go">func (dbc *DBContext) HandleGetProducts(c *gin.Context) {
-    // 1. Parse parameters
-    offset, _ := strconv.Atoi(c.Param("offset"))
-    filter := c.Param("filter")
+    // 1. Parse Query Parameters (e.g. ?filter=smartphone)
+    offset, _ := strconv.Atoi(c.DefaultQuery("offset", "0"))
+    filterValue := c.Query("filter")
 
     // 2. Query Database (GORM)
     var products []models.Product
-    dbc.DB.Where("category = ?", filter).Find(&products)
+    dbc.DB.Where("category = ?", filterValue).Find(&products)
 
     // 3. Render HTML Template
-    // We send "productsTemplate.html" with the data
+    // We send "productsTemplate.html" filled with data
     c.HTML(200, "productsTemplate.html", products)
 }</code></pre>
                 </div>
-                <p><strong>Note:</strong> <code>c.HTML</code> is key here. It tells the template engine to parse the file and fill it with the <code>products</code> data.</p>
+                <p><strong>Key Fix:</strong> We use <code>c.Query()</code> instead of <code>c.Param()</code> to correctly handle the URL parameters sent by HTMX.</p>
             </div>
         </div>
 
         <div class="slide">
             <div class="slide-content">
                 <h2>Flow 2: Adding to Cart</h2>
-                <p>We use <code>hx-post</code> to send data to the server and update the Cart UI immediately.</p>
+                <p>We use a persistent UUID for the user session to manage their cart.</p>
 
                 <div class="grid-2">
                     <div>
                         <h3>The Template (productTemplate.html)</h3>
-                        <p>This template is rendered by the server for each product.</p>
+                        <p>The server renders this button for every product.</p>
                         <div class="code-block">
 <pre><code class="language-xml">&lt;div class="product-box"&gt;
     &lt;h3&gt;{{.Name}}&lt;/h3&gt;
-    &lt;p&gt;{{.Price}}&lt;/p&gt;
 &lt;/div&gt;
 
-&lt;!-- Hidden input for ID --&gt;
 &lt;input type="hidden" name="product_id" value="{{.ID}}"&gt;
 
-&lt;!-- HTMX Action --&gt;
+&lt;!-- POST to specific User Cart ID --&gt;
 &lt;button
-    hx-post="/cart/user123/add/{{.ID}}"
+    hx-post="/cart/a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11/add/{{.ID}}"
     hx-include="[name='product_id']"
     hx-target="#cart-view"
     hx-swap="innerHTML"&gt;
@@ -263,18 +264,14 @@ CMD ["./main"]</code></pre>
                         </div>
                     </div>
                     <div>
-                        <h3>The Target (index.html)</h3>
-                        <p>The cart sidebar waits for updates.</p>
+                        <h3>The Target (Cart Sidebar)</h3>
+                        <p>When the button is clicked, HTMX updates just this sidebar.</p>
                         <div class="code-block">
-<pre><code class="language-xml">&lt;aside id="shopping-cart-container"&gt;
-    &lt;h2&gt;🛒 Your Cart&lt;/h2&gt;
-
-    &lt;div id="cart-view"
-         hx-get="/cart/user123"
-         hx-trigger="load, cartUpdated from:body"&gt;
-        &lt;p&gt;Loading cart...&lt;/p&gt;
-    &lt;/div&gt;
-&lt;/aside&gt;</code></pre>
+<pre><code class="language-xml">&lt;div id="cart-view"
+     hx-get="/cart/a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11"
+     hx-trigger="load, cartUpdated from:body"&gt;
+    &lt;p&gt;Loading cart...&lt;/p&gt;
+&lt;/div&gt;</code></pre>
                         </div>
                     </div>
                 </div>
@@ -284,19 +281,19 @@ CMD ["./main"]</code></pre>
         <div class="slide">
             <div class="slide-content">
                 <h2>Data Persistence</h2>
-                <p>We use PostgreSQL with a robust schema for Users, Products, and Carts.</p>
+                <p>We use PostgreSQL with a robust schema. The <strong>Products</strong> table uses ENUMs for strict categorization.</p>
 
                 <div class="code-block">
-<pre><code class="language-sql">-- Products Table
+<pre><code class="language-sql">CREATE TYPE category AS ENUM ('smartphone', 'tablet', 'accessory', ...);
+
 CREATE TABLE products (
     id INTEGER PRIMARY KEY,
     name TEXT NOT NULL,
     price DECIMAL NOT NULL,
-    category category NOT NULL, -- Custom ENUM type
-    attributes JSONB -- Flexible JSON for specs
+    category category NOT NULL,
+    attributes JSONB -- Flexible JSON for specs (color, storage)
 );
 
--- Carts Table (Relational)
 CREATE TABLE carts (
     user_id UUID PRIMARY KEY REFERENCES users(id),
     item_id INTEGER REFERENCES products(id),
@@ -309,11 +306,11 @@ CREATE TABLE carts (
         <div class="slide">
             <div class="slide-content" style="text-align: center;">
                 <h2>Thank You!</h2>
-                <h3>Why this works:</h3>
+                <h3>Why this architecture wins:</h3>
                 <ul style="list-style: none; padding: 0; font-size: 1.2rem; margin: 2rem 0; line-height: 2;">
-                    <li>🚀 <strong>Fast:</strong> Low latency, small payload sizes.</li>
-                    <li>🧩 <strong>Simple:</strong> Frontend state is managed by the Server.</li>
-                    <li>🛠️ <strong>Maintainable:</strong> Clear separation of concerns in Go.</li>
+                    <li>🚀 <strong>Simplicity:</strong> No JSON parsing on the client.</li>
+                    <li>🔗 <strong>Coupling:</strong> Templates live near the backend logic.</li>
+                    <li>📱 <strong>Performance:</strong> Small initial bundle, fast HTML swaps.</li>
                 </ul>
                 <div style="display: flex; justify-content: center; gap: 20px;">
                     <a href="index.html"><button>Go to Live Store</button></a>
