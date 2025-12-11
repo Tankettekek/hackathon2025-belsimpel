@@ -2,41 +2,87 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Your Cart – Product Store</title>
+    <title>Checkout – Product Store</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <script src="https://unpkg.com/htmx.org@1.9.10"></script>
 </head>
 <body>
     <header>
-        <h1>Your Cart</h1>
-        <p><a href="index.html">&larr; Back to products</a></p>
+        <h1>Checkout</h1>
+        <p><a href="cart.html">&larr; Back to cart</a></p>
         <hr>
     </header>
 
     <main>
-        <section id="cart-page" style="max-width: 800px; margin: 0 auto;">
-            <h2>Items in your cart</h2>
+        <section id="checkout-page" style="max-width: 800px; margin: 0 auto;">
+            <h2>Order summary</h2>
 
-            <!-- This div will be replaced by the HTML returned from GET /cart -->
-            <div id="cart-view"
+            <!-- Re-use the /cart endpoint to show current cart as summary -->
+            <div id="order-summary"
                  hx-get="/cart"
                  hx-trigger="load"
-                 hx-target="#cart-view"
+                 hx-target="#order-summary"
                  hx-swap="innerHTML">
                 <p>Loading your cart...</p>
             </div>
 
             <hr>
 
-            <div style="display: flex; justify-content: space-between; align-items: center;">
-                <a href="index.html">
-                    <button type="button">Continue Shopping</button>
-                </a>
+            <h2>Your details</h2>
 
-                <a href="checkout.html">
-                    <button type="button">Proceed to Checkout</button>
-                </a>
-            </div>
+            <!-- Simple checkout form posting to /checkout -->
+            <form id="checkout-form"
+                  hx-post="/checkout"
+                  hx-target="#checkout-result"
+                  hx-swap="innerHTML"
+                  style="display: flex; flex-direction: column; gap: 8px; max-width: 400px;">
+
+                <label>
+                    Full name<br>
+                    <input type="text" name="name" required>
+                </label>
+
+                <label>
+                    Email<br>
+                    <input type="email" name="email" required>
+                </label>
+
+                <label>
+                    Address<br>
+                    <input type="text" name="address" required>
+                </label>
+
+                <label>
+                    City<br>
+                    <input type="text" name="city" required>
+                </label>
+
+                <label>
+                    Postal code<br>
+                    <input type="text" name="postal_code" required>
+                </label>
+
+                <label>
+                    Payment method<br>
+                    <select name="payment_method" required>
+                        <option value="ideal">iDEAL</option>
+                        <option value="credit_card">Credit card</option>
+                        <option value="paypal">PayPal</option>
+                    </select>
+                </label>
+
+                <label>
+                    Notes (optional)<br>
+                    <textarea name="notes" rows="3"></textarea>
+                </label>
+
+                <div style="margin-top: 12px; display: flex; gap: 10px; align-items: center;">
+                    <button type="submit">Place order</button>
+                    <a href="cart.html">Back to cart</a>
+                </div>
+            </form>
+
+            <div id="checkout-result" style="margin-top: 16px;"></div>
         </section>
     </main>
 </body>

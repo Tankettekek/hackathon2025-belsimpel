@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Your Cart – Product Store</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="https://unpkg.com/htmx.org@1.9.10"></script>
+</head>
+<body>
+    <header>
+        <h1>Your Cart</h1>
+        <p><a href="index.html">&larr; Back to products</a></p>
+        <hr>
+    </header>
+
+    <main>
+        <section id="cart-page" style="max-width: 800px; margin: 0 auto;">
+            <h2>Items in your cart</h2>
+
+            <!-- This div will be replaced by the HTML returned from GET /cart -->
+            <div id="cart-view"
+                 hx-get="/cart"
+                 hx-trigger="load"
+                 hx-target="#cart-view"
+                 hx-swap="innerHTML">
+                <p>Loading your cart...</p>
+            </div>
+
+            <hr>
+
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+                <a href="index.html">
+                    <button type="button">Continue Shopping</button>
+                </a>
+
+                <a href="checkout.html">
+                    <button type="button">Proceed to Checkout</button>
+                </a>
+            </div>
+        </section>
+    </main>
+</body>
+</html>
