@@ -1,30 +1,52 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Product Store</title>
+    <title>HTMX Product Store</title>
     <script src="https://unpkg.com/htmx.org@1.9.10"></script>
+    <style>
+        body { font-family: sans-serif; }
+        .product-grid { list-style: none; padding: 0; }
+        .product-grid li { border: 1px solid #ccc; margin-bottom: 10px; padding: 10px; }
+        #checkout-summary-modal {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            padding: 20px;
+            border: 2px solid #333;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            z-index: 100;
+        }
+    </style>
 </head>
 <body>
-    <header><h1>The Product Shop</h1></header>
+    <header><h1>The HTMX Product Shop</h1></header>
 
-    <main style="display: flex;">
-        <section id="browse-products-container" style="flex: 2;">
+    <main style="display: flex; max-width: 1200px; margin: 0 auto;">
+
+        <section id="browse-products-container" style="flex: 2; padding: 15px;">
             <h2>Browse Products</h2>
-            <button hx-get="products/phones" hx-target="#product-list" hx-swap="innerHTML">View Phones</button>
-            <button hx-get="products/accessories" hx-target="#product-list" hx-swap="innerHTML">View Accessories</button>
-            <button hx-get="products/subscriptions" hx-target="#product-list" hx-swap="innerHTML">View Subscriptions</button>
+
+            <button hx-get="/products/?product_type=prepaid&offset=0&pageSize=10" hx-target="#product-view-area" hx-swap="outerHTML">View Prepaids</button>
+            <button hx-get="/products/?product_type=accessory?offset=0&pageSize=10" hx-target="#product-view-area" hx-swap="outerHTML">View Accessories</button>
+            <button hx-get="/products/?product_type=subscription?offset=0&pageSize=10" hx-target="#product-view-area" hx-swap="outerHTML">View Subscriptions</button>
+            <button hx-get="/products/?product_type=smartphones?offset=0&pageSize=10" hx-target="#product-view-area" hx-swap="outerHTML">View Smartphones</button>
 
             <hr>
 
-            <div id="product-list">
-                <p>Select a category above to start browsing.</p>
+            <div id="product-view-area">
+                <h3>Select a category to start browsing!</h3>
             </div>
+
         </section>
 
-        <aside id="shopping-cart-container" style="flex: 1; margin-left: 20px;">
-            <h2>Your Cart</h2>
-            <div id="cart-view">
-                <p>Your cart is empty.</p>
+        <aside id="shopping-cart-container" style="flex: 1; margin-left: 20px; padding: 15px; border-left: 1px solid #eee;">
+            <h2>🛒 Your Cart</h2>
+
+            <div id="cart-view" hx-get="/api/cart/view" hx-trigger="load, cartUpdated from:body" hx-swap="innerHTML">
+                <p>Loading cart...</p>
             </div>
 
             <hr>
@@ -35,7 +57,7 @@
         </aside>
     </main>
 
-    <div id="checkout-summary-modal" style="border: 1px solid black; padding: 10px; position: fixed; top: 10%; right: 10%; display: none;">
+    <div id="checkout-summary-modal">
         <p>Checkout details will appear here.</p>
     </div>
 </body>
