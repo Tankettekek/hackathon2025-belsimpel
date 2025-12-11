@@ -1,0 +1,26 @@
+version: "3.9"
+
+services:
+  backend:
+    image: golang:latest
+    working_dir: /app
+    ports:
+      - "8001:8000"
+    command: 
+    depends_on:
+      - db
+
+  db:
+    image: postgresql:latest
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: root
+      POSTGRES_DB: hackathon
+      POSTGRES_USER: hackathon
+    ports:
+      - "3306:3306"
+    volumes:
+      - db_data:/var/lib/mysql
+
+volumes:
+  db_data:
