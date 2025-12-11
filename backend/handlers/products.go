@@ -1,11 +1,21 @@
 package handlers
 
 import (
+	"belsimel/hackathon/v2/models"
 	"errors"
 	"fmt"
 	"github.com/gin-gonic/gin"
 	"strconv"
 )
+
+var filterMap = map[string]models.Category{
+	"smartphone":   models.Smartphone,
+	"subscription": models.Subscription,
+	"prepaid":      models.Prepaid,
+	"accessory":    models.Accessory,
+	"tablet":       models.Tablet,
+	"wearable":     models.Wearable,
+}
 
 func HandleGetProducts(c *gin.Context) {
 	offset, err := strconv.Atoi(c.Param("offset"))
@@ -18,6 +28,12 @@ func HandleGetProducts(c *gin.Context) {
 		c.AbortWithError(400, fmt.Errorf("Can't convert page size to integer: %s", err))
 	}
 
+	filter := filterMap[c.Param("filter")]
+	if filter == models.Unknown {
+		c.AbortWithError(400, fmt.Errorf("Filter %s doesn't exist", filter))
+	}
+
+	// Query products
 }
 
 func HandleGetProduct(c *gin.Context) {

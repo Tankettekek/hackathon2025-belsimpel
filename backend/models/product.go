@@ -8,12 +8,13 @@ type PaymentType int
 type Category int
 
 const (
-	OneTimePurchase PaymentType = iota
-	RecurringPurchase
+	OneTime PaymentType = iota
+	Recurring
 )
 
 const (
-	Smartphone Category = iota
+	Unknown Category = iota
+	Smartphone
 	Subscription
 	Prepaid
 	Accessory
