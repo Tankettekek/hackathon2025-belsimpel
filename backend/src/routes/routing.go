@@ -9,6 +9,8 @@ import (
 func StartRouting(dbc *handlers.DBContext) {
 	router := gin.Default()
 
+	router.LoadHTMLGlob("../frontend/templates")
+
 	router.GET("/products", dbc.HandleGetProducts)
 	router.GET("/products/:id", dbc.HandleGetProduct)
 
