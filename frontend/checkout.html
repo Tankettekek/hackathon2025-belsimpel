@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="styles.css">
-    <title>Checkout – Product Store</title>
+    <title>Checkout - Product Store</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <script src="https://unpkg.com/htmx.org@1.9.10"></script>
 </head>
@@ -69,7 +69,8 @@
                         <option value="ideal">iDEAL</option>
                         <option value="credit_card">Credit card</option>
                         <option value="paypal">PayPal</option>
-                    </select>
+                        <option value="bartering">Bartering</option>
+                    </select>   
                 </label>
 
                 <label>
@@ -77,10 +78,14 @@
                     <textarea name="notes" rows="3"></textarea>
                 </label>
 
-                <div style="margin-top: 12px; display: flex; gap: 10px; align-items: center;">
+                <div class="checkout-actions">
+                    <a href="cart.html">
+                        <button type="button" class="btn-secondary">Back to cart</button>
+                    </a>
+
                     <button type="submit">Place order</button>
-                    <a href="cart.html">Back to cart</a>
                 </div>
+
             </form>
 
             <div id="checkout-result" style="margin-top: 16px;"></div>
