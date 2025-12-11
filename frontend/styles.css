@@ -34,12 +34,13 @@ header h1 {
   color: var(--brand-blue);
 }
 
-/* Main container */
+/* Main container (applies Flexbox for side-by-side layout) */
 main {
   max-width: 1200px;
   margin: 0 auto 2rem;
   padding: 0 1rem;
   gap: 1.5rem;
+  display: flex; /* Added from inline style */
 }
 
 /* Card-style panels */
@@ -129,6 +130,27 @@ a:hover {
   background: #fafbff;
 }
 
+/* Grid layout for products (REQUIRED FOR MULTIPLE COLUMNS) */
+.product-grid {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.product-grid li {
+    width: calc(33.33% - 14px); /* Adjusted slightly for better wrapping */
+    border: 1px solid var(--border-soft);
+    border-radius: 8px;
+    margin-bottom: 0;
+    padding: 15px;
+    box-sizing: border-box;
+    background: white;
+}
+
+
 /* Modal tweaks on index */
 #checkout-summary-modal {
   border-radius: 12px;
@@ -176,5 +198,9 @@ hr {
 
   #shopping-cart-container {
     margin-left: 0 !important;
+  }
+
+  .product-grid li {
+    width: 100%; /* Full width on small screens */
   }
 }

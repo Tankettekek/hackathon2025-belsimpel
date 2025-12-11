@@ -2,9 +2,9 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" href="styles.css">
     <title>Your Cart – Product Store</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="styles.css">
     <script src="https://unpkg.com/htmx.org@1.9.10"></script>
 </head>
 <body>
@@ -15,10 +15,9 @@
     </header>
 
     <main>
-        <section id="cart-page" style="max-width: 800px; margin: 0 auto;">
+        <section id="cart-page" style="max-width: 800px; margin: 0 auto; padding: 1.5rem;">
             <h2>Items in your cart</h2>
 
-            <!-- This div will be replaced by the HTML returned from GET /cart -->
             <div id="cart-view"
                  hx-get="/cart"
                  hx-trigger="load"
@@ -31,7 +30,7 @@
 
             <div style="display: flex; justify-content: space-between; align-items: center;">
                 <a href="index.html">
-                    <button type="button">Continue Shopping</button>
+                    <button type="button" class="btn-secondary">Continue Shopping</button>
                 </a>
 
                 <a href="checkout.html">

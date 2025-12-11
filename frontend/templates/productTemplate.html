@@ -1,12 +1,19 @@
 {{/*
-  The 'range' action iterates over the slice of data passed to the template.
+  This template renders the inner content for one product item.
+  It MUST be wrapped in <li> and placed inside <ul id="product-list" class="product-grid"> by the backend.
 */}}
-{{range .}}
 <div class="product-box">
     <h3>{{.Name}}</h3>
-    <p> {{.Price}}</p>
-    <p> {{.Currency}}</p>
-    <p> {{.Stock}}</p>
-    <p> {{.Category}}</p>
+    <p> {{.Price}} {{.Currency}}</p>
+    <p>Stock: {{.Stock}}</p>
+    <p>Category: {{.Category}}</p>
 </div>
-{{end}}
+
+<input type="hidden" name="product_id" value="{{.ID}}">
+<button
+    hx-post="/api/cart/add"
+    hx-include="[name='product_id']"
+    hx-target="#cart-view"
+    hx-swap="innerHTML">
+    Add to Cart
+</button>
