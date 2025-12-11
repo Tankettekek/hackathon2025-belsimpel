@@ -1,11 +1,13 @@
 package routes
 
 import (
+	"belsimel/hackathon/v2/src/database"
 	"belsimel/hackathon/v2/src/handlers"
+
 	"github.com/gin-gonic/gin"
 )
 
-func StartRouting() {
+func StartRouting(c *database.Context) {
 	router := gin.Default()
 
 	router.GET("/products", handlers.HandleGetProducts)

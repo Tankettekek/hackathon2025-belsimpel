@@ -12,6 +12,5 @@ const (
 )
 
 type Context struct {
-	DB       *gorm.DB
-	dbStatus status
+	DB *gorm.DB
 }
