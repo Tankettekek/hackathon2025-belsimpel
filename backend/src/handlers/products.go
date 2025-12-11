@@ -1,8 +1,7 @@
 package handlers
 
 import (
-	"belsimel/hackathon/v2/models"
-	"errors"
+	"belsimel/hackathon/v2/src/models"
 	"fmt"
 	"github.com/gin-gonic/gin"
 	"strconv"

@@ -1,0 +1,12 @@
+{{/*
+  The 'range' action iterates over the slice of data passed to the template.
+*/}}
+{{range .}}
+<div class="product-box">
+    <h3>{{.Name}}</h3>
+    <p> {{.Price}}</p>
+    <p> {{.Currency}}</p>
+    <p> {{.Stock}}</p>
+    <p> {{.Category}}</p>
+</div>
+{{end}}

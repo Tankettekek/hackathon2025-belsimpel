@@ -1,7 +1,7 @@
 package routes
 
 import (
-	"belsimel/hackathon/v2/handlers"
+	"belsimel/hackathon/v2/src/handlers"
 	"github.com/gin-gonic/gin"
 )
 
