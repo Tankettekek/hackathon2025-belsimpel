@@ -13,7 +13,7 @@ const (
 )
 
 const (
-	Unknown Category = iota
+	Default Category = iota
 	Smartphone
 	Subscription
 	Prepaid
