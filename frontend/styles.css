@@ -178,3 +178,87 @@ hr {
     margin-left: 0 !important;
   }
 }
+
+/* Cart page layout */
+#cart-page {
+  padding: 1.5rem 1.75rem 1.75rem;
+}
+
+#cart-page h2 {
+  margin-top: 0;
+  margin-bottom: 0.75rem;
+}
+
+/* Cart content box */
+#cart-view {
+  margin-top: 0.75rem;
+  padding: 0.75rem;
+  border-radius: 8px;
+  border: 1px dashed var(--border-soft);
+  background: #fafbff;
+  min-height: 70px;
+}
+
+/* Bottom button row on cart */
+.cart-actions {
+  display: flex;
+  justify-content: flex-end;  /* push buttons to the right */
+  gap: 0.75rem;               /* space between buttons */
+  margin-top: 1.25rem;
+}
+
+.cart-actions button {
+  padding-inline: 1.4rem;
+}
+
+/* Make “Continue Shopping” look secondary */
+.cart-actions .btn-secondary {
+  background: #ffffff;
+  color: var(--brand-blue);
+  border: 1px solid var(--brand-blue);
+  box-shadow: none;
+}
+
+.cart-actions .btn-secondary:hover {
+  background: rgba(0, 157, 223, 0.06);
+}
+
+/* Checkout page layout */
+#checkout-page {
+  padding: 1.5rem 1.75rem 1.75rem;
+  margin-top: 1.5rem;
+}
+
+#checkout-page h2 {
+  margin-top: 0;
+  margin-bottom: 0.75rem;
+}
+
+#order-summary {
+  margin-bottom: 1.5rem;
+}
+
+/* Bottom button row on checkout */
+.checkout-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.75rem;
+  margin-top: 1.25rem;
+}
+
+.checkout-actions button {
+  padding-inline: 1.4rem;
+}
+
+/* secondary style is already used on cart, reuse it here */
+.checkout-actions .btn-secondary {
+  background: #ffffff;
+  color: var(--brand-blue);
+  border: 1px solid var(--brand-blue);
+  box-shadow: none;
+}
+
+.checkout-actions .btn-secondary:hover {
+  background: rgba(0, 157, 223, 0.06);
+}
+
