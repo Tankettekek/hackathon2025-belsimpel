@@ -4,31 +4,14 @@ import (
 	"github.com/govalues/decimal"
 )
 
-type PaymentType int
-type Category int
-
-const (
-	OneTime PaymentType = iota
-	Recurring
-)
-
-const (
-	Default Category = iota
-	Smartphone
-	Subscription
-	Prepaid
-	Accessory
-	Tablet
-	Wearable
-)
-
 type Product struct {
-	Id          int
-	Stock       int
-	Category    Category
-	PaymentType PaymentType
-	Name        string
-	Price       decimal.Decimal
-	Currency    string
-	Description string
+	ID          int             `gorm:"column:id;primaryKey"`
+	Name        string          `gorm:"type:text;not null"`
+	Description string          `gorm:"type:text;not null"`
+	Price       decimal.Decimal `gorm:"type:decimal;not null"`
+	Currency    string          `gorm:"type:text;not null"`
+	Stock       int             `gorm:"type:int;not null"`
+	Category    string          `gorm:"type:category;not null"`
+	PaymentType string          `gorm:"type:payment_type;not null"`
+	Attributes  []byte          `gorm:"type:jsonb"`
 }

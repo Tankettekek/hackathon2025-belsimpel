@@ -9,13 +9,13 @@ import (
 	"gorm.io/gorm"
 )
 
-var filterMap = map[string]models.Category{
-	"smartphone":   models.Smartphone,
-	"subscription": models.Subscription,
-	"prepaid":      models.Prepaid,
-	"accessory":    models.Accessory,
-	"tablet":       models.Tablet,
-	"wearable":     models.Wearable,
+var filterMap = map[string]string{
+	"smartphone":   "smartphone",
+	"subscription": "subscription",
+	"prepaid":      "prepaid",
+	"accessory":    "accessory",
+	"tablet":       "tablet",
+	"wearable":     "wearable",
 }
 
 func (dbc *DBContext) HandleGetProducts(c *gin.Context) {
@@ -29,18 +29,15 @@ func (dbc *DBContext) HandleGetProducts(c *gin.Context) {
 		c.AbortWithError(400, fmt.Errorf("can't convert page size to integer: %s", err))
 	}
 
-	filter := filterMap[c.Param("filter")]
-	if filter == models.Default {
-		c.AbortWithError(400, fmt.Errorf("filter %s doesn't exist", c.Param("filter")))
-	}
+	filterValue, hasFilter := filterMap[c.Param("filter")]
 
 	// Query products
 	var products []models.Product
 	var res *gorm.DB
-	if filter == models.Default {
+	if !hasFilter {
 		res = dbc.DB.Offset(offset).Limit(page_size).Find(&products)
 	} else {
-		res = dbc.DB.Offset(offset).Limit(page_size).Where("category = ?", filter).Find(&products)
+		res = dbc.DB.Offset(offset).Limit(page_size).Where("category = ?", filterValue).Find(&products)
 	}
 
 	if res.Error != nil {
