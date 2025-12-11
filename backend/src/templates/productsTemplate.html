@@ -1,0 +1,18 @@
+{{/*
+Renders a list of products passed as []models.Product
+*/}}
+<div class="products-grid">
+  {{ range . }}
+  <div class="product-card">
+    <h3>{{ .Name }}</h3>
+    <p>{{ .Description }}</p>
+    <div class="meta">
+      <span class="price">{{ .Price }} {{ .Currency }}</span>
+      <span class="stock">Stock: {{ .Stock }}</span>
+      <span class="category">Category: {{ .Category }}</span>
+      <span class="payment">Payment: {{ .PaymentType }}</span>
+    </div>
+    <a class="details" href="/product/{{ .ID }}">View details</a>
+  </div>
+  {{ end }}
+</div>

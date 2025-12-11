@@ -4,6 +4,9 @@ DROP TABLE IF EXISTS users;
 DROP TABLE IF EXISTS carts;
 DROP TABLE IF EXISTS orders;
 
+-- Ensure required extensions exist
+CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
+
 -- Create users table
 CREATE TABLE users (
     id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),

@@ -1,0 +1,13 @@
+{{/*
+Renders a single product passed as models.Product
+*/}}
+<div class="product-detail">
+  <h2>{{ .Name }}</h2>
+  <p class="description">{{ .Description }}</p>
+  <div class="meta">
+    <span class="price">{{ .Price }} {{ .Currency }}</span>
+    <span class="stock">Stock: {{ .Stock }}</span>
+    <span class="category">Category: {{ .Category }}</span>
+    <span class="payment">Payment: {{ .PaymentType }}</span>
+  </div>
+</div>

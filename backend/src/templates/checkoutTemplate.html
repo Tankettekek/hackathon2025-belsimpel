@@ -1,0 +1,12 @@
+{{/*
+Renders checkout items passed as []models.ActualCartItem
+*/}}
+<div class="checkout-items">
+  {{ range . }}
+  <div class="checkout-item">
+    <h4>{{ .Product.Name }}</h4>
+    <p>{{ .Product.Price }} {{ .Product.Currency }}</p>
+    <p>Quantity: {{ .Quantity }}</p>
+  </div>
+  {{ end }}
+</div>

@@ -1,0 +1,12 @@
+{{/*
+Renders cart items passed as []models.ActualCartItem
+*/}}
+<div class="cart-items">
+	{{ range . }}
+	<div class="cart-item">
+		<h4>{{ .Product.Name }}</h4>
+		<p>{{ .Product.Price }} {{ .Product.Currency }}</p>
+		<p>Quantity: {{ .Quantity }}</p>
+	</div>
+	{{ end }}
+</div>

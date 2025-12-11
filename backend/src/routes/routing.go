@@ -9,7 +9,8 @@ import (
 func StartRouting(dbc *handlers.DBContext) {
 	router := gin.Default()
 
-	router.LoadHTMLGlob("../frontend/templates")
+	// Load all HTML templates from backend-bundled templates directory
+	router.LoadHTMLGlob("./src/templates/*.html")
 
 	router.GET("/products", dbc.HandleGetProducts)
 	router.GET("/products/:id", dbc.HandleGetProduct)
