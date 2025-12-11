@@ -1,38 +1,79 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
     <title>Bobibo - Product Store</title>
-    <script src="https://unpkg.com/htmx.org@1.9.10"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="styles.css">
     <script src="https://unpkg.com/htmx.org@1.9.10"></script>
 </head>
 <body>
-    <header><h1>Product Shop</h1></header>
+    <header>
+        <h1>Bobibo - Product Store</h1>
+    </header>
 
-    <main>
+    <main class="main-two-column">
 
-        <section id="browse-products-container" style="flex: 2; padding: 15px;">
+        <section id="browse-products-container">
             <h2>Browse Products</h2>
 
-            <button hx-get="/products/?product_type=prepaid&offset=0&pageSize=10" hx-target="#product-view-area" hx-swap="outerHTML">View Prepaids</button>
-            <button hx-get="/products/?product_type=accessory&offset=0&pageSize=10" hx-target="#product-view-area" hx-swap="outerHTML">View Accessories</button>
-            <button hx-get="/products/?product_type=subscription&offset=0&pageSize=10" hx-target="#product-view-area" hx-swap="outerHTML">View Subscriptions</button>
-            <button hx-get="/products/?product_type=smartphones&offset=0&pageSize=10" hx-target="#product-view-area" hx-swap="outerHTML">View Smartphones</button>
-            <button hx-get="/products/?product_type=tablets&offset=0&pageSize=10" hx-target="#product-view-area" hx-swap="outerHTML">View Tablets</button>
-            <button hx-get="/products/?product_type=wearables&offset=0&pageSize=10" hx-target="#product-view-area" hx-swap="outerHTML">View Wearables</button>
+            <button
+                hx-get="/products/?product_type=prepaid&offset=0&pageSize=10"
+                hx-target="#product-view-area"
+                hx-swap="outerHTML">
+                View Prepaids
+            </button>
+
+            <button
+                hx-get="/products/?product_type=accessory&offset=0&pageSize=10"
+                hx-target="#product-view-area"
+                hx-swap="outerHTML">
+                View Accessories
+            </button>
+
+            <button
+                hx-get="/products/?product_type=subscription&offset=0&pageSize=10"
+                hx-target="#product-view-area"
+                hx-swap="outerHTML">
+                View Subscriptions
+            </button>
+
+            <button
+                hx-get="/products/?product_type=smartphones&offset=0&pageSize=10"
+                hx-target="#product-view-area"
+                hx-swap="outerHTML">
+                View Smartphones
+            </button>
+
+            <button
+                hx-get="/products/?product_type=tablets&offset=0&pageSize=10"
+                hx-target="#product-view-area"
+                hx-swap="outerHTML">
+                View Tablets
+            </button>
+
+            <button
+                hx-get="/products/?product_type=wearables&offset=0&pageSize=10"
+                hx-target="#product-view-area"
+                hx-swap="outerHTML">
+                View Wearables
+            </button>
 
             <hr>
 
             <div id="product-view-area">
                 <h3>Select a category to start browsing!</h3>
             </div>
-
         </section>
 
-        <aside id="shopping-cart-container" style="flex: 1; margin-left: 20px; padding: 15px; border-left: 1px solid #eee;">
+        <aside id="shopping-cart-container">
             <h2>🛒 Your Cart</h2>
 
-            <div id="cart-view" hx-get="/cart/view" hx-trigger="load, cartUpdated from:body" hx-swap="innerHTML">
+            <div
+                id="cart-view"
+                hx-get="/cart/view"
+                hx-trigger="load, cartUpdated from:body"
+                hx-swap="innerHTML">
                 <p>Loading cart...</p>
             </div>
 

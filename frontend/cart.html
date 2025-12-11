@@ -10,20 +10,20 @@
 </head>
 <body>
     <header>
-        <h1>Your Cart</h1>
-        <p><a href="index.html">&larr; Back to products</a></p>
-        <hr>
+        <h1>Bobibo - Your Cart</h1>
     </header>
 
-    <main>
-        <section id="cart-page" style="max-width: 800px; margin: 0 auto; padding: 1.5rem;">
+    <main class="cart-layout">
+        <a href="index.html" class="back-link">← Back to products</a>
+
+        <section id="cart-page">
             <h2>Items in your cart</h2>
 
             <div id="cart-view"
-                 hx-get="/cart"
-                 hx-trigger="load"
-                 hx-target="#cart-view"
-                 hx-swap="innerHTML">
+                hx-get="/cart"
+                hx-trigger="load"
+                hx-target="#cart-view"
+                hx-swap="innerHTML">
                 <p>Loading your cart...</p>
             </div>
 
@@ -39,6 +39,7 @@
                 </a>
             </div>
         </section>
-    </main>
+    </main> 
+
 </body>
 </html>
