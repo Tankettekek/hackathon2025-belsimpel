@@ -2,23 +2,23 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" href="styles.css">
-    <title>Checkout - Product Store</title>
+    <title>Bobibo - Checkout</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="styles.css">
     <script src="https://unpkg.com/htmx.org@1.9.10"></script>
 </head>
 <body>
     <header>
-        <h1>Checkout</h1>
-        <p><a href="cart.html">&larr; Back to cart</a></p>
-        <hr>
+        <h1>Bobibo - Checkout</h1>
     </header>
 
-    <main>
-        <section id="checkout-page" style="max-width: 800px; margin: 0 auto; padding: 1.5rem;">
+    <main class="cart-layout">
+        <a href="cart.html" class="back-link">← Back to cart</a>
+
+        <section id="checkout-page">
             <h2>Order summary</h2>
 
+            <!-- Re-use the /cart endpoint to show current cart as summary -->
             <div id="order-summary"
                  hx-get="/cart"
                  hx-trigger="load"
@@ -31,11 +31,11 @@
 
             <h2>Your details</h2>
 
+            <!-- Simple checkout form posting to /checkout -->
             <form id="checkout-form"
                   hx-post="/checkout"
-                  hx-target="#checkout-result"
-                  hx-swap="innerHTML"
-                  style="display: flex; flex-direction: column; gap: 8px; max-width: 400px;">
+                  hx-target="#checkout-page"
+                  hx-swap="innerHTML">
 
                 <label>
                     Full name<br>
@@ -68,8 +68,7 @@
                         <option value="ideal">iDEAL</option>
                         <option value="credit_card">Credit card</option>
                         <option value="paypal">PayPal</option>
-                        <option value="bartering">Bartering</option>
-                    </select>   
+                    </select>
                 </label>
 
                 <label>
@@ -83,12 +82,9 @@
                     </a>
 
                     <button type="submit">Place order</button>
-                    <a href="cart.html">Back to cart</a>
                 </div>
 
             </form>
-
-            <div id="checkout-result" style="margin-top: 16px;"></div>
         </section>
     </main>
 </body>

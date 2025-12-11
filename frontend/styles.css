@@ -34,13 +34,18 @@ header h1 {
   color: var(--brand-blue);
 }
 
-/* Main container (applies Flexbox for side-by-side layout) */
+/* Main container */
 main {
   max-width: 1200px;
   margin: 0 auto 2rem;
   padding: 0 1rem;
+}
+
+/* Two-column layout ONLY on index page */
+.main-two-column {
+  display: flex;
   gap: 1.5rem;
-  display: flex; /* Added from inline style */
+  align-items: flex-start;
 }
 
 /* Card-style panels */
@@ -54,6 +59,18 @@ main {
   box-shadow: 0 2px 6px rgba(15, 23, 42, 0.04);
 }
 
+/* Index: left/right sizing */
+#browse-products-container {
+  flex: 2;
+  padding: 1.25rem 1.5rem;
+}
+
+#shopping-cart-container {
+  flex: 1;
+  padding: 1.25rem 1.5rem;
+}
+
+/* Section titles */
 #browse-products-container h2,
 #shopping-cart-container h2,
 #cart-page h2,
@@ -92,7 +109,7 @@ button.htmx-request {
   cursor: wait;
 }
 
-/* Less prominent / secondary buttons if you need them */
+/* Less prominent / secondary buttons */
 .btn-secondary {
   background: #ffffff;
   color: var(--brand-blue);
@@ -114,14 +131,13 @@ a:hover {
   text-decoration: underline;
 }
 
-/* Product/category buttons row */
+/* Product category buttons row */
 #browse-products-container button {
   margin: 0.25rem 0.25rem 0.25rem 0;
 }
 
 /* “Boxed” inner areas */
 #product-view-area,
-#cart-view,
 #order-summary {
   margin-top: 1rem;
   padding: 0.75rem;
@@ -130,28 +146,35 @@ a:hover {
   background: #fafbff;
 }
 
-/* Grid layout for products (REQUIRED FOR MULTIPLE COLUMNS) */
+/* Cart view (used in sidebar + cart page) */
+#cart-view {
+  margin-top: 0.75rem;
+  padding: 0.75rem;
+  border-radius: 8px;
+  border: 1px dashed var(--border-soft);
+  background: #fafbff;
+  min-height: 70px;
+}
+
+/* Grid layout for products */
 .product-grid {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 20px;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
 }
 
 .product-grid li {
-    width: calc(33.33% - 14px); /* Adjusted slightly for better wrapping */
-    border: 1px solid var(--border-soft);
-    border-radius: 8px;
-    margin-bottom: 0;
-    padding: 15px;
-    box-sizing: border-box;
-    background: white;
+  width: calc(33.33% - 14px);
+  border: 1px solid var(--border-soft);
+  border-radius: 8px;
+  padding: 15px;
+  background: #ffffff;
 }
 
-
-/* Modal tweaks on index */
+/* Modal (if you use it on index) */
 #checkout-summary-modal {
   border-radius: 12px;
   border: 2px solid var(--brand-blue);
@@ -189,23 +212,13 @@ hr {
   margin: 1rem 0;
 }
 
-/* Mobile tweaks */
-@media (max-width: 768px) {
-  main {
-    flex-direction: column;
-    padding: 0 1rem;
-  }
-
-  #shopping-cart-container {
-    margin-left: 0 !important;
-  }
-
-  .product-grid li {
-    width: 100%; /* Full width on small screens */
-  }
+/* Cart page layout */
+.cart-layout {
+  max-width: 800px;
+  margin: 0 auto 2rem;
+  padding: 0 1rem;
 }
 
-/* Cart page layout */
 #cart-page {
   padding: 1.5rem 1.75rem 1.75rem;
 }
@@ -215,38 +228,16 @@ hr {
   margin-bottom: 0.75rem;
 }
 
-/* Cart content box */
-#cart-view {
-  margin-top: 0.75rem;
-  padding: 0.75rem;
-  border-radius: 8px;
-  border: 1px dashed var(--border-soft);
-  background: #fafbff;
-  min-height: 70px;
-}
-
 /* Bottom button row on cart */
 .cart-actions {
   display: flex;
-  justify-content: flex-end;  /* push buttons to the right */
-  gap: 0.75rem;               /* space between buttons */
+  justify-content: flex-end;
+  gap: 0.75rem;
   margin-top: 1.25rem;
 }
 
 .cart-actions button {
   padding-inline: 1.4rem;
-}
-
-/* Make “Continue Shopping” look secondary */
-.cart-actions .btn-secondary {
-  background: #ffffff;
-  color: var(--brand-blue);
-  border: 1px solid var(--brand-blue);
-  box-shadow: none;
-}
-
-.cart-actions .btn-secondary:hover {
-  background: rgba(0, 157, 223, 0.06);
 }
 
 /* Checkout page layout */
@@ -276,15 +267,31 @@ hr {
   padding-inline: 1.4rem;
 }
 
-/* secondary style is already used on cart, reuse it here */
-.checkout-actions .btn-secondary {
-  background: #ffffff;
+/* Back link above cards */
+.back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  font-size: 0.9rem;
   color: var(--brand-blue);
-  border: 1px solid var(--brand-blue);
-  box-shadow: none;
+  margin: 0 0 0.75rem 0;
 }
 
-.checkout-actions .btn-secondary:hover {
-  background: rgba(0, 157, 223, 0.06);
+.back-link:hover {
+  text-decoration: underline;
 }
 
+/* Mobile tweaks */
+@media (max-width: 768px) {
+  .main-two-column {
+    flex-direction: column;
+  }
+
+  #shopping-cart-container {
+    margin-left: 0;
+  }
+
+  .product-grid li {
+    width: 100%;
+  }
+}
