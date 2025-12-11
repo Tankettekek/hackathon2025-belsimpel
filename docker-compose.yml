@@ -2,7 +2,7 @@ services:
   backend:
     build: ./backend
     ports:
-      - "8001:8000"
+      - "8080:8080"
     command: 
     depends_on:
       - db
@@ -17,6 +17,13 @@ services:
       - "5432:5432"
     volumes:
       - db_data:/var/lib/postgresql/data
+
+  frontend:
+    build: ./frontend
+    ports:
+      - "8000:80"
+    depends_on:
+      - backend
 
 volumes:
   db_data:
