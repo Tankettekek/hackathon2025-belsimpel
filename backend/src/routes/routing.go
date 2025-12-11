@@ -14,8 +14,8 @@ func StartRouting(dbc *handlers.DBContext) {
 
 	router.GET("/cart/:id", dbc.HandleGetCart)
 	router.GET("/cart/:id/checkout", dbc.HandleGetCheckout)
-	router.POST("/cart/:id/add/:id", dbc.HandleAddCartItem)
-	router.POST("/cart/:id/remove/:id", dbc.HandleRemoveCartItem)
+	router.POST("/cart/:user-id/add/:id", dbc.HandleAddCartItem)
+	router.POST("/cart/:user-id/remove/:id", dbc.HandleRemoveCartItem)
 
 	// Runs on 8080
 	router.Run()
