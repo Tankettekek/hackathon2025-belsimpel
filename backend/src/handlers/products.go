@@ -3,8 +3,9 @@ package handlers
 import (
 	"belsimel/hackathon/v2/src/models"
 	"fmt"
-	"github.com/gin-gonic/gin"
 	"strconv"
+
+	"github.com/gin-gonic/gin"
 )
 
 var filterMap = map[string]models.Category{
@@ -16,7 +17,7 @@ var filterMap = map[string]models.Category{
 	"wearable":     models.Wearable,
 }
 
-func HandleGetProducts(c *gin.Context) {
+func (dbc *DBContext) HandleGetProducts(c *gin.Context) {
 	offset, err := strconv.Atoi(c.Param("offset"))
 	if err != nil {
 		c.AbortWithError(400, fmt.Errorf("Can't convert offset to integer: %s", err))
@@ -35,7 +36,7 @@ func HandleGetProducts(c *gin.Context) {
 	// Query products
 }
 
-func HandleGetProduct(c *gin.Context) {
+func (dbc *DBContext) HandleGetProduct(c *gin.Context) {
 	id, err := strconv.Atoi(c.Param("id"))
 	if err != nil {
 		c.AbortWithError(400, fmt.Errorf("Can't convert id to integer: %s", err))

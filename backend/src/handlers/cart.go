@@ -4,18 +4,17 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func HandleGetCart(c *gin.Context) {
+func (dbc *DBContext) HandleGetCart(c *gin.Context) {
 
 }
 
-func HandleGetCheckout(c *gin.Context) {
+func (dbc *DBContext) HandleGetCheckout(c *gin.Context) {
 
 }
 
-func HandleAddCartItem(c *gin.Context) {
+func (dbc *DBContext) HandleAddCartItem(c *gin.Context) {
 
 }
 
-func HandleRemoveCartItem(c *gin.Context) {
-
+func (dbc *DBContext) HandleRemoveCartItem(c *gin.Context) {
 }

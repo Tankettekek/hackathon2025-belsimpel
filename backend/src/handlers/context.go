@@ -1,4 +1,4 @@
-package database
+package handlers
 
 import (
 	"gorm.io/gorm"
@@ -11,6 +11,6 @@ const (
 	Disconnected
 )
 
-type Context struct {
+type DBContext struct {
 	DB *gorm.DB
 }
