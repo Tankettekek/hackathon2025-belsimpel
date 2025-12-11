@@ -1,0 +1,180 @@
+:root {
+  --brand-blue: #009DDF;
+  --brand-blue-dark: #0082b8;
+  --bg-page: #f5f7fb;
+  --text-main: #222;
+  --border-soft: #e1e5ee;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  color: var(--text-main);
+  background: var(--bg-page);
+}
+
+/* Top bar */
+header {
+  background: #ffffff;
+  border-bottom: 1px solid var(--border-soft);
+  padding: 1rem 0;
+  margin-bottom: 1.5rem;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
+}
+
+header h1 {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem;
+  font-size: 1.6rem;
+  color: var(--brand-blue);
+}
+
+/* Main container */
+main {
+  max-width: 1200px;
+  margin: 0 auto 2rem;
+  padding: 0 1rem;
+  gap: 1.5rem;
+}
+
+/* Card-style panels */
+#browse-products-container,
+#shopping-cart-container,
+#cart-page,
+#checkout-page {
+  background: #ffffff;
+  border-radius: 10px;
+  border: 1px solid var(--border-soft);
+  box-shadow: 0 2px 6px rgba(15, 23, 42, 0.04);
+}
+
+#browse-products-container h2,
+#shopping-cart-container h2,
+#cart-page h2,
+#checkout-page h2 {
+  margin-top: 0;
+}
+
+/* Buttons – Bobibo blue */
+button {
+  appearance: none;
+  border: none;
+  border-radius: 999px;
+  padding: 0.5rem 1.1rem;
+  font-size: 0.95rem;
+  cursor: pointer;
+  background: var(--brand-blue);
+  color: #ffffff;
+  font-weight: 500;
+  transition: background 0.15s ease, transform 0.05s ease, box-shadow 0.15s ease;
+}
+
+button:hover {
+  background: var(--brand-blue-dark);
+  transform: translateY(-1px);
+  box-shadow: 0 3px 8px rgba(0, 157, 223, 0.35);
+}
+
+button:active {
+  transform: translateY(0);
+  box-shadow: none;
+}
+
+button[disabled],
+button.htmx-request {
+  opacity: 0.7;
+  cursor: wait;
+}
+
+/* Less prominent / secondary buttons if you need them */
+.btn-secondary {
+  background: #ffffff;
+  color: var(--brand-blue);
+  border: 1px solid var(--brand-blue);
+  box-shadow: none;
+}
+
+.btn-secondary:hover {
+  background: rgba(0, 157, 223, 0.06);
+}
+
+/* Links */
+a {
+  color: var(--brand-blue);
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+/* Product/category buttons row */
+#browse-products-container button {
+  margin: 0.25rem 0.25rem 0.25rem 0;
+}
+
+/* “Boxed” inner areas */
+#product-view-area,
+#cart-view,
+#order-summary {
+  margin-top: 1rem;
+  padding: 0.75rem;
+  border-radius: 8px;
+  border: 1px dashed var(--border-soft);
+  background: #fafbff;
+}
+
+/* Modal tweaks on index */
+#checkout-summary-modal {
+  border-radius: 12px;
+  border: 2px solid var(--brand-blue);
+}
+
+/* Forms on checkout */
+label {
+  font-size: 0.9rem;
+  color: #444;
+}
+
+input[type="text"],
+input[type="email"],
+select,
+textarea {
+  width: 100%;
+  margin-top: 0.25rem;
+  padding: 0.4rem 0.55rem;
+  border-radius: 8px;
+  border: 1px solid var(--border-soft);
+  font-size: 0.95rem;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+  outline: 2px solid rgba(0, 157, 223, 0.35);
+  border-color: var(--brand-blue);
+}
+
+/* Dividers */
+hr {
+  border: 0;
+  border-top: 1px solid var(--border-soft);
+  margin: 1rem 0;
+}
+
+/* Mobile tweaks */
+@media (max-width: 768px) {
+  main {
+    flex-direction: column;
+    padding: 0 1rem;
+  }
+
+  #shopping-cart-container {
+    margin-left: 0 !important;
+  }
+}

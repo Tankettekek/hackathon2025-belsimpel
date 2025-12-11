@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <link rel="stylesheet" href="styles.css">
     <title>Checkout – Product Store</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <script src="https://unpkg.com/htmx.org@1.9.10"></script>
@@ -32,10 +33,10 @@
 
             <!-- Simple checkout form posting to /checkout -->
             <form id="checkout-form"
-                  hx-post="/checkout"
-                  hx-target="#checkout-result"
-                  hx-swap="innerHTML"
-                  style="display: flex; flex-direction: column; gap: 8px; max-width: 400px;">
+                hx-post="/checkout"
+                hx-target="#checkout-page"
+                hx-swap="innerHTML"
+                style="display: flex; flex-direction: column; gap: 8px; max-width: 400px;">
 
                 <label>
                     Full name<br>
