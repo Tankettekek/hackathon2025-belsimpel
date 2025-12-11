@@ -1,19 +1,16 @@
 {{/*
-  This template renders the inner content for one product item.
-  It MUST be wrapped in <li> and placed inside <ul id="product-list" class="product-grid"> by the backend.
-*/}}
-<div class="product-box">
-    <h3>{{.Name}}</h3>
-    <p> {{.Price}} {{.Currency}}</p>
-    <p>Stock: {{.Stock}}</p>
-    <p>Category: {{.Category}}</p>
-</div>
+This template renders the inner content for one product item.
+It MUST be wrapped in <li> and placed inside <ul id="product-list" class="product-grid"> by the backend.
+    */}}
+    <div class="product-box">
+      <h3>{{.Name}}</h3>
+      <p> {{.Price}} {{.Currency}}</p>
+      <p>Stock: {{.Stock}}</p>
+      <p>Category: {{.Category}}</p>
+    </div>
 
-<input type="hidden" name="product_id" value="{{.ID}}">
-<button
-    hx-post="/cart/user123/add/{{.ID}}"
-    hx-include="[name='product_id']"
-    hx-target="#cart-view"
-    hx-swap="innerHTML">
-    Add to Cart
-</button>
+    <input type="hidden" name="product_id" value="{{.ID}}">
+    <button hx-post="/cart/{{.userId}}/add/{{.ID}}" hx-include="[name='product_id']" hx-target="#cart-view"
+      hx-swap="innerHTML">
+      Add to Cart
+    </button>

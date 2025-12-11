@@ -1,0 +1,15 @@
+{{range .}}
+<div>
+  <div class="product-box">
+    <h3>{{.Name}}</h3>
+    <p> {{.Price}} {{.Currency}}</p>
+    <p>Stock: {{.Stock}}</p>
+    <p>Category: {{.Category}}</p>
+  </div>
+
+  <input type="hidden" name="product_id" value="{{.ID}}">
+  <button hx-post="/cart/{{.userId}}/add/{{.ID}}" hx-include="[name='product_id']" hx-target="#cart-view"
+    hx-swap="innerHTML">
+    Add to Cart
+  </button>
+</div>
