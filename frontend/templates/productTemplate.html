@@ -11,7 +11,7 @@
 
 <input type="hidden" name="product_id" value="{{.ID}}">
 <button
-    hx-post="/api/cart/add"
+    hx-post="/cart/user123/add/{{.ID}}"
     hx-include="[name='product_id']"
     hx-target="#cart-view"
     hx-swap="innerHTML">
