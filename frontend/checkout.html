@@ -18,7 +18,6 @@
         <section id="checkout-page">
             <h2>Order summary</h2>
 
-            <!-- Re-use the /cart endpoint to show current cart as summary -->
             <div id="order-summary"
                  hx-get="/cart"
                  hx-trigger="load"
@@ -31,7 +30,6 @@
 
             <h2>Your details</h2>
 
-            <!-- Simple checkout form posting to /checkout -->
             <form id="checkout-form"
                   hx-post="/checkout"
                   hx-target="#checkout-page"
