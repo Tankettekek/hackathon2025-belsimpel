@@ -29,14 +29,9 @@
 
             <hr>
 
-            <button id="checkout-btn"
-                    hx-get="/api/checkout/summary"
-                    hx-target="#checkout-summary-modal"
-                    hx-swap="outerHTML"
-                    hx-on::after-request="this.classList.remove('htmx-request')"
-                    style="display: none;">
-                Proceed to Checkout
-            </button>
+            <a href="checkout.html">
+                <button type="button">Proceed to Checkout</button>
+            </a>
         </aside>
     </main>
 
